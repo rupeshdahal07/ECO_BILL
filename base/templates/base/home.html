@@ -1,0 +1,250 @@
+{% load static %}
+{% include 'base/navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Bill - Sustainable Digital Billing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e8f5e9, #e0f7fa, #f1f8e9);
+            background-size: 400% 400%;
+            background-attachment: fixed;
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Inter', 'Helvetica', sans-serif;
+        }
+        
+        /* Optional animated background enhancement */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill-rule="evenodd" clip-rule="evenodd" d="M50 75c13.807 0 25-11.193 25-25S63.807 25 50 25 25 36.193 25 50s11.193 25 25 25zm0 5c16.569 0 30-13.431 30-30S66.569 20 50 20 20 33.431 20 50s13.431 30 30 30z" fill="rgba(255,255,255,0.05)"/></svg>');
+            opacity: 0.6;
+            z-index: -1;
+        }
+        
+        .hero {
+            min-height: calc(100vh - 70px); /* Adjust based on navbar height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 5%;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(90deg, #1B5E20, #2E7D32, #388E3C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #424242;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #2E7D32, #388E3C);
+            color: white;
+            padding: 1.1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 15px rgba(46, 125, 50, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button:hover {
+            background: linear-gradient(45deg, #1B5E20, #2E7D32);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+        
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 4rem;
+            justify-content: center;
+        }
+        
+        .stat-item {
+            background-color: white;
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #2E7D32, #74E926);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #2E7D32, #388E3C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-content {
+                padding: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+        
+            .stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+        
+            .stat-item {
+                width: 100%;
+                max-width: 300px;
+            }
+        
+            h1 {
+                font-size: 2.3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .cta-button {
+                padding: 1rem 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+   
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transform Your Billing, Save Our Planet</h1>
+            <p class="subtitle">Join thousands of businesses reducing paper waste through smart, sustainable digital billing solutions. Make every transaction count for the environment.</p>
+            <a href="{% url 'create_receipt' %}" class="cta-button">Get Started Free</a>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Trees Saved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Digital Bills Processed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">Paper Reduction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
